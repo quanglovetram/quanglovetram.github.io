@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúng Mình Yêu Nhau ♡</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&family=Pacifico&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: url('https://media.istockphoto.com/id/1433763174/vector/groovy-background-tunnel-of-concentric-hearts-romantic-cute-illustration-trendy-girly-preppy.jpg?s=612x612&w=0&k=20&c=_vQzrjvPnMWrD-x_rtSK0Nsy_ZVSCGsgZ3w125uqBoY=') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff69b4;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+
+        /* Hiệu ứng trái tim bay */
+        .floating-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float-up linear infinite;
+            z-index: 1;
+            opacity: 0.8;
+        }
+        @keyframes float-up {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container chính */
+        .main-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 30px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            z-index: 10;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Bố cục Linh hoạt (Responsive) */
+        .couple-wrapper {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap; /* Cho phép rớt dòng trên mobile */
+            gap: 20px;
+        }
+
+        .person {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: float-avatar 3s ease-in-out infinite;
+        }
+
+        @keyframes float-avatar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+            object-fit: cover;
+        }
+
+        .name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            margin-top: 10px;
+            color: #ff1493;
+        }
+
+        /* Bộ đếm thời gian */
+        .counter-section {
+            flex: 1.5;
+            min-width: 280px;
+            padding: 20px;
+        }
+
+        .heart-center {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .days-main {
+            font-family: 'Pacifico', cursive;
+            font-size: 28px;
+            color: #ff1493;
+            margin-bottom: 15px;
+        }
+
+        .timer-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap; /* Tránh tràn dòng trên đt cực nhỏ */
+        }
+
+        .time-unit {
+            background: #fff;
+            padding: 10px;
+            border-radius: 12px;
+            min-width: 65px;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.15);
+            border: 1px solid #ffe4f0;
+        }
+
+        .time-num {
+            display: block;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff3366;
+        }
+
+        .time-label {
+            font-size: 12px;
+            color: #ff69b4;
+            text-transform: uppercase;
+        }
+
+        .full-date {
+            margin-top: 20px;
+            font-style: italic;
+            font-size: 16px;
+            color: #ff69b4;
+            background: rgba(255, 182, 193, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .main-card {
+                padding: 20px 10px;
+            }
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+            .name {
+                font-size: 26px;
+            }
+            .counter-section {
+                order: -1; /* Đưa bộ đếm lên trên cùng khi ở mobile */
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .days-main {
+                font-size: 22px;
+            }
+            .timer-box {
+                gap: 5px;
+            }
+            .time-unit {
+                min-width: 55px;
+                padding: 8px 5px;
+            }
+            .time-num {
+                font-size: 18px;
+            }
+        }
+
+        /* Hiệu ứng bùng nổ tim khi click */
+        .click-heart {
+            position: absolute;
+            font-size: 30px;
+            pointer-events: none;
+            animation: burst 0.8s ease-out forwards;
+            z-index: 100;
+        }
+        @keyframes burst {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2) translateY(-50px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="floating-hearts-container"></div>
+
+    <div class="main-card">
+        <div class="couple-wrapper">
+            <!-- Bạn Nữ -->
+            <div class="person">
+                <img src="https://i.pinimg.com/236x/3b/97/12/3b97121288b009ba0cad5a911de46248.jpg" alt="NGOẠI LỆ CỦA QUANG " class="avatar">
+                <div class="name">NGỌC TRÂM</div>
+            </div>
+
+            <!-- Bộ đếm chính -->
+            <div class="counter-section">
+                <div class="heart-center">❤️</div>
+                <div class="days-main">Chúng mình đã yêu nhau</div>
+                
+                <div class="timer-box">
+                    <div class="time-unit">
+                        <span class="time-num" id="years">0</span>
+                        <span class="time-label">Năm</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-num" id="months">0</span>
+                        <span class="time-label">Tháng</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-num" id="days">0</span>
+                        <span class="time-label">Ngày</span>
+                    </div>
+                </div>
+
+                <div class="timer-box" style="margin-top: 10px;">
+                    <div class="time-unit">
+                        <span class="time-num" id="hours">00</span>
+                        <span class="time-label">Giờ</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-num" id="minutes">00</span>
+                        <span class="time-label">Phút</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-num" id="seconds">00</span>
+                        <span class="time-label">Giây</span>
+                    </div>
+                </div>
+
+                <div class="full-date" id="full-date-display">Đang tính toán...</div>
+            </div>
+
+            <!-- Bạn Nam -->
+            <div class="person">
+                <img src="https://xahara.vn/wp-content/uploads/ch%C3%B3-husky-ng%C3%A1o.jpg" alt="Anh ấy" class="avatar">
+                <div class="name">QUANG TOÀN NĂNG </div>
+            </div>
+        </div>
+        
+        <p style="margin-top: 25px; font-size: 14px; opacity: 0.8;">Mãi mãi bên nhau bạn nhé! ♡</p>
+    </div>
+
+    <audio id="bg-music" loop></audio>
+
+    <script>
+        // Cài đặt ngày kỷ niệm (Năm, Tháng-1, Ngày, Giờ, Phút)
+        const startDate = new Date(2022, 4, 15, 0, 0, 0); 
+
+        function updateTimer() {
+            const now = new Date();
+            
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+            let hours = now.getHours() - startDate.getHours();
+            let minutes = now.getMinutes() - startDate.getMinutes();
+            let seconds = now.getSeconds() - startDate.getSeconds();
+
+            if (seconds < 0) { seconds += 60; minutes--; }
+            if (minutes < 0) { minutes += 60; hours--; }
+            if (hours < 0) { hours += 24; days--; }
+            if (days < 0) {
+                const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+                days += lastMonth;
+                months--;
+            }
+            if (months < 0) { months += 12; years--; }
+
+            document.getElementById('years').innerText = years;
+            document.getElementById('months').innerText = months;
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+
+            document.getElementById('full-date-display').innerText = `Kỷ niệm từ: ${startDate.toLocaleDateString('vi-VN')}`;
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Trái tim bay nền
+        function createFloatingHeart() {
+            const heart = document.createElement("div");
+            heart.className = "floating-heart";
+            const icons = ["💖", "💕", "🌸", "✨", "💗"];
+            heart.innerText = icons[Math.floor(Math.random() * icons.length)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+            heart.style.animationDuration = (Math.random() * 5 + 10) + "s";
+            document.getElementById("floating-hearts-container").appendChild(heart);
+            setTimeout(() => heart.remove(), 15000);
+        }
+        setInterval(createFloatingHeart, 500);
+
+        // Hiệu ứng Click
+                document.body.addEventListener("click", (e) => {
+            const h = document.createElement("div");
+            h.className = "click-heart";
+            h.innerText = "💜";
+            h.style.left = e.clientX + "px";
+            h.style.top = e.clientY + "px";
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 800);
+
+            // PHẦN SỬA ĐỔI NHẠC Ở ĐÂY:
+            const audio = document.getElementById("bg-music");
+            
+            // Kiểm tra nếu chưa có nguồn nhạc thì mới chọn ngẫu nhiên bài hát
+            if (!audio.src || audio.src === "") {
+                const playlist = [
+                    "https://files.catbox.moe/vw5fny.mp3", // Link 1
+                    "https://files.catbox.moe/sktl83.mp3"  // Link 2 (Đã thêm)
+                ];
+                
+                // Chọn ngẫu nhiên 1 trong 2 bài
+                const randomSong = playlist[Math.floor(Math.random() * playlist.length)];
+                
+                audio.src = randomSong;
+                audio.volume = 0.5;
+                audio.play().catch(err => console.log("Chờ tương tác để phát nhạc"));
+            } else if (audio.paused) {
+                // Nếu nhạc đã có src nhưng đang bị tạm dừng (ví dụ sau khi click lần đầu)
+                audio.play();
+            }
+        });
+    </script>
+</body>
+</html>
